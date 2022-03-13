@@ -1,6 +1,7 @@
 public with sharing class CTLocationController {
 
 
+    //Query and returns no of locations corresponding with each health status
 
     public static Map<String, Integer> getStatusCount()
     {
