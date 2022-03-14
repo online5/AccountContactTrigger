@@ -1,5 +1,16 @@
+
+
+/*********************************************************
+ * Author: Deepak Patil
+ * Date: 11/March/2022
+ * Description: Handler Class for CTPerson trigger
+**********************************************************/
+
 public with sharing class CTPersonTriggerHandler {
     
+
+    //Function to makes sure that the person inserted is in Green Status, generates a unique
+    // token for the person based on the mobile number.
     public static void beforeInsert(List<Person__c> newPersonRecords) {
             for(Person__c pobj: newPersonRecords)
             {
@@ -9,7 +20,7 @@ public with sharing class CTPersonTriggerHandler {
             }
         
     }
-
+    //Updates the status update date when the person's health status changes.
     public static void beforeUpdate(List<Person__c> newPersonRecords, Map<Id, Person__c> oldPersonMap) {
             for(Person__c pobj: newPersonRecords)
             {
@@ -21,6 +32,9 @@ public with sharing class CTPersonTriggerHandler {
             }
         
     }
+    //Updates the health status of cohabitants, neighbours, primary and secondary contacts
+    //if a person's health status is changed to Red, also updates the location status of all locations if a person's 
+    //health status changes.
     public static void afterUpdate(List<Person__c> newPersonRecords, Map<Id, Person__c> oldPersonMap) {
 
         Set<Id> statusChange = new Set<Id>();

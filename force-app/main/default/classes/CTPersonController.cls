@@ -1,6 +1,17 @@
+
+
+
+
+/********************************************************
+ * Author: Deepak Patil 
+ * Date: 12/Mar 
+ * Description: Class to provide the auxillary functions to the location handler class
+*********************************************************/
+
 public with sharing class CTPersonController {
     
 
+    //Return the count of people corresponding to health status
     public static Map<String, Integer> getHealthStatusCount()
     {
         Map<String, Integer> healthStatusCountMap = new Map<String, Integer>();
@@ -18,7 +29,7 @@ public with sharing class CTPersonController {
         return healthStatusCountMap;
 
     }
-    
+    //Returns the unique token for each mobile no
     public static String getToken(String mobile) {
         if(String.isBlank(mobile))
         {
@@ -27,20 +38,21 @@ public with sharing class CTPersonController {
         Blob mobileHash = Crypto.generateDigest('MD5', Blob.valueOf(mobile));
         return EncodingUtil.base64Encode(mobileHash);
     }
+    //Return a list of recent person records whose status date is updated 
     public static List<Person__c> getRecentHealthChanges()
     {
         List<Person__c> personList = [SELECT Id, Name,Health_Status__c, Mobile__c, 
         Status_Update_Date__c, Token__c FROM Person__c ORDER BY Status_Update_Date__c DESC NULLS LAST limit 100];
         return personList;
     }
-
+    //Returns a list of persons based upon the search keyword used in the UI screen
     public static List<Person__c> searchPeople(String searchTerm) {
         List<Person__c> personList = [SELECT Id, Name, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c 
                                     FROM Person__c 
                                     WHERE Name like :searchTerm+'%' or Mobile__c like :searchTerm+'%' or Token__c like :searchTerm+'%' ];
         return personList;
     }
-
+    
     public static Set<Id> getNeighbours(Set<Id> personIds, Set<Id> alreadyProcessed)
     {
         List<People_Tracing__c> peopleTraces = [Select Id, Person_1__c, Person_2__c FROM People_Tracing__c 
