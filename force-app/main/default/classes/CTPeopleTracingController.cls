@@ -1,5 +1,6 @@
 public with sharing class CTPeopleTracingController {
 
+    //Returns the people trace records based on the person Id
     public static List<People_Tracing__c> getTraces(String personId) {
         if(String.isBlank(personId))
         {
@@ -12,7 +13,8 @@ public with sharing class CTPeopleTracingController {
         return newList;
         
     }
-
+    //Function that return list of duplicated record that are inserted.
+    // Duplicate people trace records are not allowed to be inserted.
     public static List<People_Tracing__c> checkDuplicates (List<People_Tracing__c> peopleTraces) {
         
         if(peopleTraces == null || peopleTraces.size() == 0)
