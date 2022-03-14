@@ -1,5 +1,16 @@
+
+
+/********************************************************
+ * Author: Deepak Patil
+ * Date: 8/Mar/22
+ * Description: Provides auxillary functions for location traces.
+*********************************************************/
+
 public with sharing class CTLocationTracingController {
-    
+
+
+
+    //Returns the list of visitors visited a particular location ordered by their visit date.
     public static List<Location_Tracing__c> getVisitors(Set<Id> locationId) {
     
         List<Location_Tracing__c> visitorList = [SELECT Id, Person__c, Location__c, Visit_Date__c, Person__r.Health_Status__c, Person__r.Token__c 
@@ -8,6 +19,7 @@ public with sharing class CTLocationTracingController {
         
     }
 
+    //Returns a list of locations that a particular person visited.
     public static List<Location_Tracing__c> getlocationByPersonIds(Set<Id> personIds)  {
         List<Location_Tracing__c> locationTracingRecords = [SELECT Id, Person__c, Location__c
                                                             FROM Location_Tracing__c 
@@ -16,6 +28,9 @@ public with sharing class CTLocationTracingController {
 
         
     }
+
+    //Returns a list of location tracing records where person's health status is Green and the person visited the location
+    // in last 10 days
     public static List<Location_Tracing__c> getLocationsByLocationIds(Set<Id> locationIds) {
         if(locationIds == null)
         {
@@ -29,7 +44,8 @@ public with sharing class CTLocationTracingController {
         
     }
 
-
+    //Functions that returns the list of duplicate trace records that are inserted.
+    // Duplicate location trace record are not allowed.
     public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> locationTraces) {
         if(locationTraces == null)
         {

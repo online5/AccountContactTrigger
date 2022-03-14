@@ -2,7 +2,6 @@ public with sharing class CTLocationController {
 
 
     //Query and returns no of locations corresponding with each health status
-
     public static Map<String, Integer> getStatusCount()
     {
         Map<String, Integer> locationStatusCountMap = new Map<String, Integer>();  
@@ -16,7 +15,7 @@ public with sharing class CTLocationController {
         return locationStatusCountMap;
     }
 
-
+    //Updates the location's red score( no of people whose status are red) and status based upon the red score.
     public static void updateRedScore(Set<Id> locationIds)
     {
         List<Location__c> locationToUpdate = new List<Location__c>();
@@ -76,6 +75,7 @@ public with sharing class CTLocationController {
         return locationList;
         
     }
+    //Returns the location's details by taking in locationId as the function argument
     public static Location__c getLocationById(String locationId) {
         if(String.isBlank(locationId))
         {

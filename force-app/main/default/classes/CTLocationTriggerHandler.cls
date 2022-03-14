@@ -2,10 +2,12 @@
 /****************************
  * Author: Deepak Patil
  * Date: 11/Jan/2021
- * Description: CT Location Trigger Handler
+ * Description: CT Location Trigger Handler, handles all trigger events and scenario
 *****************************/
 public with sharing class CTLocationTriggerHandler {
     
+
+    //Function to make sure the new location inserted have Status as 'Green'
     public static void beforeInsert(List<Location__c> newLocationToInsert) {
 
         for(Location__c loc: newLocationToInsert)
@@ -15,7 +17,8 @@ public with sharing class CTLocationTriggerHandler {
         }
         
     }
-
+    //If location's status changes to Red, then all the person who visited in the last 10 days 
+    // are made to quaratine themselves i.e their health status is set to 'Yellow'
     public static void afterUpdate(List<Location__c> newLocations, Map<Id, Location__C> oldMap) {
 
         Set<Id> locationIds = new Set<Id>();
@@ -49,7 +52,8 @@ public with sharing class CTLocationTriggerHandler {
         
     }
 
-
+    // If a location status is changed then Status update date of the location 
+    //is set to the date when status is changed.
     public static void beforeUpdate(List<Location__c> locations, Map<Id, Location__c> oldLocationMap) 
     {
         for(Location__c locRec: locations)

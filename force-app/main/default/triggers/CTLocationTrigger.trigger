@@ -1,3 +1,9 @@
+/********************************************************
+ * Author: Deepak Patil
+ * Date: 8/March/22
+ * Description: Trigger on Location object, handles events such as insert, update
+**********************************************************/
+
 trigger CTLocationTrigger on Location__c (before insert, before update, after update, after insert) {
 
     switch on Trigger.operationType {
